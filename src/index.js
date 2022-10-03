@@ -1,14 +1,20 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
 
-const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
+const client = new ApolloClient({
+  uri: 'https://api.spacex.land/graphql/',
+  cache: new InMemoryCache(),
+});
 
-root.render(
-  <StrictMode>
+const rootElement = document.getElementById('root');
+ReactDOM.render(
+  <ApolloProvider client={client}>
     <App />
-  </StrictMode>
+  </ApolloProvider>,
+  rootElement
 );
